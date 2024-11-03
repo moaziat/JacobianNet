@@ -9,6 +9,7 @@ A PyTorch-based implementation for learning and computing Arakawa Jacobians usin
   - Vortex dipoles
   - Kelvin-Helmholtz instability
   - Mixed field combinations
+- Implementation of Arakawa's nine-point stencil finite difference method
 - Memory-efficient dataset handling with HDF5
 - Custom conservation-aware loss function
 - Configurable neural network architecture
@@ -19,15 +20,26 @@ A PyTorch-based implementation for learning and computing Arakawa Jacobians usin
   - Training visualization
   - Memory optimization
 
+## Technical Details
+
+The Arakawa Jacobian scheme uses a nine-point stencil for spatial discretization, which helps preserve important physical invariants such as energy and enstrophy. This numerical scheme is particularly effective for geophysical fluid dynamics simulations where conservation properties are crucial.
+
 ## Installation
+
+### Prerequisites
+
+Ensure you have Python 3.8+ installed. Install all required packages using:
+
+```bash
+pip install -r requirements.txt
+```
+
+### Setup
 
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/your-repo-name.git
 cd your-repo-name
-
-# Install required packages
-pip install torch h5py matplotlib numpy psutil
 ```
 
 ## Usage
@@ -40,7 +52,7 @@ python compute_jacobian.py
 
 This script will:
 - Generate diverse field pairs (turbulent, vortex, shear, mixed)
-- Compute corresponding Arakawa Jacobians
+- Compute corresponding Arakawa Jacobians using the nine-point stencil method
 - Save the dataset in HDF5 format
 
 ### 2. Train the Model
