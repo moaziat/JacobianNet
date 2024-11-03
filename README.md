@@ -42,6 +42,75 @@ git clone https://github.com/yourusername/your-repo-name.git
 cd your-repo-name
 ```
 
+## Model Architecture
+
+The neural network (`JacobianNet`) is designed to learn and compute Arakawa Jacobians efficiently. Here's the detailed architecture:
+
+```mermaid
+flowchart TB
+    subgraph inputs[Input Layer]
+        F[Field f] --> concat
+        G[Field g] --> concat
+        concat([Concatenate]) --> input[2 channels]
+    end
+
+    subgraph conv1[Convolution Block 1]
+        input --> conv1_op[Conv2d 3x3<br/>64 filters]
+        conv1_op --> bn1[BatchNorm2d]
+        bn1 --> relu1[ReLU]
+        relu1 --> drop1[Dropout 0.2]
+    end
+
+    subgraph conv2[Convolution Block 2]
+        drop1 --> conv2_op[Conv2d 3x3<br/>64 filters]
+        conv2_op --> bn2[BatchNorm2d]
+        bn2 --> relu2[ReLU]
+        relu2 --> drop2[Dropout 0.2]
+    end
+
+    subgraph conv3[Convolution Block 3]
+        drop2 --> conv3_op[Conv2d 3x3<br/>32 filters]
+        conv3_op --> bn3[BatchNorm2d]
+        bn3 --> relu3[ReLU]
+        relu3 --> drop3[Dropout 0.2]
+    end
+
+    subgraph output[Output Layer]
+        drop3 --> conv4[Conv2d 1x1<br/>1 filter]
+        conv4 --> final[Jacobian Field]
+    end
+
+    style inputs fill:#e0f7fa
+    style conv1 fill:#b2ebf2
+    style conv2 fill:#b2ebf2
+    style conv3 fill:#b2ebf2
+    style output fill:#80deea
+```
+
+### Architecture Details:
+
+1. **Input Layer**
+   - Takes two 2D fields (f and g) as input
+   - Concatenates them into a 2-channel input
+
+2. **Convolutional Blocks**
+   - Three main convolutional blocks
+   - Each block contains:
+     - 2D Convolution (3x3 kernel)
+     - Batch Normalization
+     - ReLU activation
+     - Dropout (20%)
+
+3. **Output Layer**
+   - 1x1 convolution to produce final Jacobian field
+   - Maintains spatial dimensions of input
+
+4. **Features**
+   - Preserves spatial relationships
+   - Handles multiple scales through hierarchical processing
+   - Regularization through dropout and batch normalization
+   - Parameter efficient design
+
 ## Usage
 
 ### 1. Generate Training Data
@@ -86,13 +155,6 @@ model, stats = load_model_for_inference('path/to/model_checkpoints/inference_mod
 with torch.no_grad():
     prediction = model(f_input, g_input)
 ```
-
-## Model Architecture
-
-The neural network (`JacobianNet`) consists of:
-- Input: Two 2D fields (f and g)
-- Multiple convolutional layers with batch normalization and dropout
-- Conservation-aware loss function based on Arakawa scheme properties
 
 ## Training Details
 
