@@ -193,7 +193,7 @@ if __name__ == "__main__":
     
     print(f"Generating dataset on {device}")
     
-    save_dir = os.path.join(os.path.dirname(os.getcwd()), "Arakawa_Datasets")
+    save_dir = os.path.join(os.path.dirname(os.getcwd()), "smol_Dataset")
     file_name = "diverse_fields.h5"
     
     generate_and_save_dataset(
