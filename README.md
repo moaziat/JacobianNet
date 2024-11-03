@@ -34,15 +34,7 @@ Ensure you have Python 3.8+ installed. Install all required packages using:
 pip install -r requirements.txt
 ```
 
-### Setup
-
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/your-repo-name.git
-cd your-repo-name
-```
-
-## Model Architecture
+# Model Architecture
 
 The neural network (`JacobianNet`) is designed to learn and compute Arakawa Jacobians efficiently. Here's the detailed architecture:
 
