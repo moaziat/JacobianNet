@@ -169,12 +169,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## Citation
 
-If you use this code in your research, please cite:
-
-```
-Arakawa's Method Is a Finite-Element Method
-by DENNIS C. JESPERSEN
-PII: 0021-9991(74)90047-3
-```
