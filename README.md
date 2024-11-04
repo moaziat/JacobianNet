@@ -1,3 +1,9 @@
+WARNING!!!!!!!!!!!!!!!!!!!!!!!!
+The compute_jacobian.py file should be changed depending on the fields you're working with!
+I've tested it with different files and the file on the repo is not necessarily what I've trained the model with. 
+The model gives great metrics with various type of fields
+
+
 # Neural Network for Arakawa Jacobian Computation
 
 A PyTorch-based implementation for learning and computing Arakawa Jacobians using neural networks. This project includes data generation, model training, and inference capabilities with a focus on conservation properties.
