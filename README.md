@@ -4,11 +4,7 @@ A PyTorch-based implementation for learning and computing Arakawa Jacobians usin
 
 ## Features
 
-- Generate diverse fluid dynamics training data:
-  - Turbulent fields
-  - Vortex dipoles
-  - Kelvin-Helmholtz instability
-  - Mixed field combinations
+- Generate diverse fluid dynamics training data
 - Implementation of Arakawa's nine-point stencil finite difference method
 - Memory-efficient dataset handling with HDF5
 - Custom conservation-aware loss function
@@ -24,61 +20,80 @@ A PyTorch-based implementation for learning and computing Arakawa Jacobians usin
 
 The Arakawa Jacobian scheme uses a nine-point stencil for spatial discretization, which helps preserve important physical invariants such as energy and enstrophy. This numerical scheme is particularly effective for geophysical fluid dynamics simulations where conservation properties are crucial.
 
-## Installation
-
-### Prerequisites
-
-Ensure you have Python 3.8+ installed. Install all required packages using:
-
-```bash
-pip install -r requirements.txt
-```
-
-# Model Architecture
+#
+Model Architecture
 
 The neural network (`JacobianNet`) is designed to learn and compute Arakawa Jacobians efficiently. Here's the detailed architecture:
 
 ```mermaid
-flowchart TB
-    subgraph inputs[Input Layer]
-        F[Field f] --> concat
-        G[Field g] --> concat
-        concat([Concatenate]) --> input[2 channels]
+flowchart LR
+    %% Input Layer
+    subgraph IL["Input Layer"]
+        direction TB
+        F["Field f"]
+        G["Field g"]
+        C["Concat"]
+        I["Input (2ch)"]
+        F --> C
+        G --> C
+        C --> I
     end
 
-    subgraph conv1[Convolution Block 1]
-        input --> conv1_op[Conv2d 3x3<br/>64 filters]
-        conv1_op --> bn1[BatchNorm2d]
-        bn1 --> relu1[ReLU]
-        relu1 --> drop1[Dropout 0.2]
+    %% Conv Block 1
+    subgraph CB1["Convolution Block 1"]
+        direction TB
+        C1["Conv2d 3×3 (64)"]
+        B1["BatchNorm"]
+        R1["ReLU"]
+        D1["Dropout"]
+        C1 --> B1 --> R1 --> D1
     end
 
-    subgraph conv2[Convolution Block 2]
-        drop1 --> conv2_op[Conv2d 3x3<br/>64 filters]
-        conv2_op --> bn2[BatchNorm2d]
-        bn2 --> relu2[ReLU]
-        relu2 --> drop2[Dropout 0.2]
+    %% Conv Block 2
+    subgraph CB2["Convolution Block 2"]
+        direction TB
+        C2["Conv2d 3×3 (64)"]
+        B2["BatchNorm"]
+        R2["ReLU"]
+        D2["Dropout"]
+        C2 --> B2 --> R2 --> D2
     end
 
-    subgraph conv3[Convolution Block 3]
-        drop2 --> conv3_op[Conv2d 3x3<br/>32 filters]
-        conv3_op --> bn3[BatchNorm2d]
-        bn3 --> relu3[ReLU]
-        relu3 --> drop3[Dropout 0.2]
+    %% Conv Block 3
+    subgraph CB3["Convolution Block 3"]
+        direction TB
+        C3["Conv2d 3×3 (32)"]
+        B3["BatchNorm"]
+        R3["ReLU"]
+        D3["Dropout"]
+        C3 --> B3 --> R3 --> D3
     end
 
-    subgraph output[Output Layer]
-        drop3 --> conv4[Conv2d 1x1<br/>1 filter]
-        conv4 --> final[Jacobian Field]
+    %% Output Layer
+    subgraph OL["Output Layer"]
+        direction TB
+        O1["Conv2d 1×1 (1)"]
+        O2["Jacobian Field"]
+        O1 --> O2
     end
 
-    style inputs fill:#e0f7fa
-    style conv1 fill:#b2ebf2
-    style conv2 fill:#b2ebf2
-    style conv3 fill:#b2ebf2
-    style output fill:#80deea
+    %% Connections between blocks
+    IL --> CB1
+    CB1 --> CB2
+    CB2 --> CB3
+    CB3 --> OL
+
+    %% Styling
+    classDef input fill:#fff7e6,stroke:#ffab00,stroke-width:2px
+    classDef conv fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef output fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    classDef node fill:white,stroke:#666,stroke-width:1px,rx:5px
+    
+    class IL input
+    class CB1,CB2,CB3 conv
+    class OL output
+    class F,G,C,I,C1,B1,R1,D1,C2,B2,R2,D2,C3,B3,R3,D3,O1,O2 node
 ```
-
 ### Architecture Details:
 
 1. **Input Layer**
