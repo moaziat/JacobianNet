@@ -123,6 +123,7 @@ flowchart LR
 ### 1. Generate Training Data
 
 ```bash
+cd JacobianNet/Fields
 python compute_jacobian.py
 ```
 
@@ -134,21 +135,13 @@ This script will:
 ### 2. Train the Model
 
 ```bash
+cd JacobienNet/model
 python model.py --data_path path/to/your/data.h5 \
                 --save_dir model_checkpoints \
                 --subset_size 49000 \
                 --batch_size 32 \
                 --num_epochs 50 \
                 --learning_rate 0.001
-```
-
-Training features:
-- Automatic train/validation split
-- Progress monitoring
-- Checkpoint saving
-- Loss visualization
-- Early stopping
-- Learning rate scheduling
 
 ### 3. Inference
 
