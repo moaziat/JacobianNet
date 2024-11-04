@@ -1,6 +1,6 @@
 WARNING!!!!!
 The ``` compute_jacobian.py ``` file should be changed depending on the fields you're working with!
-I've tested it with different files and the file on the repo is not necessarily what I've trained the model with. 
+Rewrite your own because the fields on the repo are not necessarily what I've trained the model with. 
 The model gives great metrics with various types of fields
 
 
