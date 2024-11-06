@@ -1,8 +1,7 @@
-WARNING!!!!!
+WARNING!!!!!(The repo is still under development)
 The ``` compute_jacobian.py ``` file should be changed depending on the fields you're working with!
 Rewrite your own because the fields on the repo are not necessarily what I've trained the model with. 
 The model gives great metrics with various types of fields
-
 
 # Neural Network for Arakawa Jacobian Computation
 
