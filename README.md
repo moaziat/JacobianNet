@@ -147,7 +147,8 @@ python model.py --data_path path/to/your/data.h5 \
                 --batch_size 32 \
                 --num_epochs 50 \
                 --learning_rate 0.001
-
+```
+ 
 ### 3. Inference
 
 ```python
@@ -163,16 +164,6 @@ with torch.no_grad():
 
 ## Training Details
 
-The training process includes:
-- Data normalization
-- Memory-efficient batch processing
-- Conservation-based loss function incorporating:
-  - Mean squared error
-  - Mean vorticity conservation
-  - Energy conservation
-  - Square vorticity conservation
-- Early stopping based on validation loss
-- Learning rate reduction on plateau
 
 ## License
 
